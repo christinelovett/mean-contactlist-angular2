@@ -1,30 +1,41 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Contact } from '../contact';
+import { ContactService } from '../contact.service';
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+@Component({
+  selector: 'app-log-in',
+  templateUrl: './log-in.component.html',
+  styleUrls: ['./log-in.component.css']
+})
 
-import { LogInComponent } from './log-in.component';
+export class LogInComponent {
+  @Input()
+  contact: Contact;
 
+  @Input()
+  createHandler: Function;
+  @Input()
+  updateHandler: Function;
+  @Input()
+  deleteHandler: Function;
 
-describe('LogInComponent', () => {
-  let component: LogInComponent;
-  let fixture: ComponentFixture<LogInComponent>;
+  constructor (private contactService: ContactService) {}
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ LogInComponent ]
-    })
-    .compileComponents();
-  }));
+  createContact(contact: Contact) {
+    this.contactService.createContact(contact).then((newContact: Contact) => {
+      this.createHandler(newContact);
+    });
+  }
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(LogInComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+  updateContact(contact: Contact): void {
+    this.contactService.updateContact(contact).then((updatedContact: Contact) => {
+      this.updateHandler(updatedContact);
+    });
+  }
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+  deleteContact(contactId: String): void {
+    this.contactService.deleteContact(contactId).then((deletedContactId: String) => {
+      this.deleteHandler(deletedContactId);
+    });
+  }
+}
