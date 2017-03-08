@@ -2,6 +2,7 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var mongodb = require("mongodb");
 var ObjectID = mongodb.ObjectID;
+var MONGODB_URI = "mongodb://heroku_khtvm8j6:a27u2auo16k88679si59isqld7@ds123400.mlab.com:23400/heroku_khtvm8j6"
 
 var CONTACTS_COLLECTION = "contacts";
 
@@ -16,7 +17,8 @@ app.use(express.static(distDir));
 var db;
 
 // Connect to the database before starting the application server.
-mongodb.MongoClient.connect(process.env.MONGODB_URI, function (err, database) {
+mongodb.MongoClient.connect(MONGODB_URI, function (err, database) {
+
   if (err) {
     console.log(err);
     process.exit(1);
