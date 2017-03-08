@@ -18,8 +18,8 @@ export class LogInComponent {
 
   constructor (private contactService: ContactService) {}
 
-  routerLink(contact: Contact) {
-    this.contactService.routerLink(contact).then( => {
+  routerLink() {
+    this.contactService.routerLink().then( => {
       console.log("router link clicked")
     });
   }
