@@ -7,23 +7,20 @@ import { ContactService } from '../contact.service';
   templateUrl: './log-in.component.html',
   styleUrls: ['./log-in.component.css']
 })
-
+createHandler
 export class LogInComponent {
   @Input()
   contact: Contact;
 
   @Input()
-  createHandler: Function;
-  @Input()
-  updateHandler: Function;
-  @Input()
-  deleteHandler: Function;
+  routerLink: Function;
+
 
   constructor (private contactService: ContactService) {}
 
-  createContact(contact: Contact) {
-    this.contactService.createContact(contact).then((newContact: Contact) => {
-      this.createHandler(newContact);
+  routerLink(contact: Contact) {
+    this.contactService.routerLink(contact).then( => {
+      console.log("router link clicked")
     });
   }
 
